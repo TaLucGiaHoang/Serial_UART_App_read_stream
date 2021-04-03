@@ -1,0 +1,13 @@
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\bin\Debug\VirtualSerialDevice.exe.config
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\bin\Debug\VirtualSerialDevice.exe
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\bin\Debug\VirtualSerialDevice.pdb
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\bin\Debug\INIFileParser.dll
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\bin\Debug\INIFileParser.xml
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.csprojAssemblyReference.cache
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.Form1.resources
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.Properties.Resources.resources
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.csproj.GenerateResource.cache
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.csproj.CoreCompileInputs.cache
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.csproj.CopyComplete
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.exe
+F:\LUAN_VAN\BLE-Earlobe\EarlobeBLETestTool\Source\ToolBox\VirtualSerialDevice\obj\Debug\VirtualSerialDevice.pdb
