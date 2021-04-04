@@ -1,4 +1,4 @@
-﻿//#define SELECT_CASE_1 
+﻿///#define SELECT_CASE_1 
 
 
 using System;
@@ -32,7 +32,8 @@ namespace VirtualSerialDevice
         //const string HEX_CSV_FILE_PATH = "hex.csv";
         //const string BIN_FILE_PATH = "bin.txt";
         //const string BIN_CSV_FILE_PATH = "bin.csv";
-        const string REPORT_FILE_PATH = "sensor-data.csv";
+        string REPORT_FILE_PATH = "sensor-datax.csv";
+        private int g_index = 0; // sensor-data-0.csv , sensor-data-1.csv , sensor-data-2.csv ...
         //private int data_type_flag = (int)SensorType.AD_NONE;
         private string timeStam;
 
@@ -528,7 +529,7 @@ namespace VirtualSerialDevice
                 // receive failed, set sensor data = 0.0
             }
 
-            str = String.Format("{0} , {1},\n", f_sensor_y, f_sensor_z);
+            str = String.Format("{0}\t{1}\n", f_sensor_y, f_sensor_z);
             // Display to Console RichTextBox
             SetTextConsole(str);
 
@@ -542,24 +543,27 @@ namespace VirtualSerialDevice
                 
                 //byte[] indata_array = { 0x44, 0x9D , 0xE8, 0xA4};
                 string str = "";
-
+                REPORT_FILE_PATH = "sensor-data-" + g_index + ".csv";
+                SetTextConsole("Save to " + REPORT_FILE_PATH + "\n");
+                g_index += 1;
                 if (sensor_data_length >= 2*SIZE_OF_FLOAT_TYPE)
                 {
                     //buffer.SubArray(0, 2);
 
                     // Convert Byte array to Float array
                     float[] float_output = convertByteArray2FloatArrary(buffer, 0, sensor_data_length);
-                    str = "Len: " + float_output.Length;
-                    for(int i = 0; i < float_output.Length; i+=2)
+                    str = "Received: " + float_output.Length;
+                    SetTextConsole(str);
+                    for (int i = 0; i < float_output.Length; i+=2)
                     {
-                        str = String.Format("{0} , {1},\n", float_output[i], float_output[i + 1]);
+                        str = String.Format("{0}\t{1}\n", float_output[i], float_output[i + 1]);
                         //// Display to Console RichTextBox
                         //SetTextConsole(str);
 
                         // Display to Report RichTextBox
                         SetTextReport(str);
                     }
-                    SetTextConsole(str);
+                    
 
                 }
 
