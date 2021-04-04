@@ -33,37 +33,27 @@
             this.cbSerialPort = new System.Windows.Forms.ComboBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.richTextBox_uart = new System.Windows.Forms.RichTextBox();
-            this.txtBxPrefix = new System.Windows.Forms.TextBox();
+            this.txtBx_sizeof_header = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_console = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.lbl_resend = new System.Windows.Forms.Label();
-            this.lbl_package = new System.Windows.Forms.Label();
-            this.txtBx_ReSendNum = new System.Windows.Forms.TextBox();
-            this.txtBx_TotalPacketNum = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lbl_sizeof_float_type = new System.Windows.Forms.Label();
+            this.lbl_n_elements = new System.Windows.Forms.Label();
+            this.txtBx_sizeof_float_type = new System.Windows.Forms.TextBox();
+            this.txtBx_n_elements = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtBx_cnt = new System.Windows.Forms.TextBox();
-            this.txtBoxPacket = new System.Windows.Forms.TextBox();
+            this.txtBoxFrameSize = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.rTxtBxReport = new System.Windows.Forms.RichTextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtBxExpected = new System.Windows.Forms.TextBox();
-            this.lblWarning = new System.Windows.Forms.Label();
-            this.txtBxTotalLost = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.lblRunTime = new System.Windows.Forms.Label();
-            this.txtBxTotalRecv = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtBxSeqNum = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lblTotalLostPercent = new System.Windows.Forms.Label();
-            this.lblTotalReceivedPercent = new System.Windows.Forms.Label();
+            this.txtBx_sizeof_checksum = new System.Windows.Forms.TextBox();
+            this.label_sizeof_checksum = new System.Windows.Forms.Label();
+            this.txtBx_sizeof_sensor_data = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbSerialPort
@@ -95,22 +85,22 @@
             this.richTextBox_uart.Text = "";
             this.richTextBox_uart.WordWrap = false;
             // 
-            // txtBxPrefix
+            // txtBx_sizeof_header
             // 
-            this.txtBxPrefix.Location = new System.Drawing.Point(64, 98);
-            this.txtBxPrefix.Name = "txtBxPrefix";
-            this.txtBxPrefix.Size = new System.Drawing.Size(137, 20);
-            this.txtBxPrefix.TabIndex = 5;
-            this.txtBxPrefix.Text = "ManufacturerData=";
+            this.txtBx_sizeof_header.Location = new System.Drawing.Point(327, 72);
+            this.txtBx_sizeof_header.Name = "txtBx_sizeof_header";
+            this.txtBx_sizeof_header.Size = new System.Drawing.Size(51, 20);
+            this.txtBx_sizeof_header.TabIndex = 5;
+            this.txtBx_sizeof_header.Text = "0";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 101);
+            this.label1.Location = new System.Drawing.Point(217, 75);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 13);
+            this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Prefix: ";
+            this.label1.Text = "Size of Header:";
             // 
             // richTextBox_console
             // 
@@ -134,9 +124,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(482, 134);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.Size = new System.Drawing.Size(74, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Uart Log:";
+            this.label3.Text = "COM Terminal";
             // 
             // btnClose
             // 
@@ -148,72 +138,56 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // lbl_resend
+            // lbl_sizeof_float_type
             // 
-            this.lbl_resend.AutoSize = true;
-            this.lbl_resend.Location = new System.Drawing.Point(16, 27);
-            this.lbl_resend.Name = "lbl_resend";
-            this.lbl_resend.Size = new System.Drawing.Size(93, 13);
-            this.lbl_resend.TabIndex = 12;
-            this.lbl_resend.Text = "Re-send Number: ";
+            this.lbl_sizeof_float_type.AutoSize = true;
+            this.lbl_sizeof_float_type.Location = new System.Drawing.Point(16, 27);
+            this.lbl_sizeof_float_type.Name = "lbl_sizeof_float_type";
+            this.lbl_sizeof_float_type.Size = new System.Drawing.Size(83, 13);
+            this.lbl_sizeof_float_type.TabIndex = 12;
+            this.lbl_sizeof_float_type.Text = "Size of Element:";
             // 
-            // lbl_package
+            // lbl_n_elements
             // 
-            this.lbl_package.AutoSize = true;
-            this.lbl_package.Location = new System.Drawing.Point(16, 49);
-            this.lbl_package.Name = "lbl_package";
-            this.lbl_package.Size = new System.Drawing.Size(114, 13);
-            this.lbl_package.TabIndex = 13;
-            this.lbl_package.Text = "Total Packet Number: ";
+            this.lbl_n_elements.AutoSize = true;
+            this.lbl_n_elements.Location = new System.Drawing.Point(16, 49);
+            this.lbl_n_elements.Name = "lbl_n_elements";
+            this.lbl_n_elements.Size = new System.Drawing.Size(105, 13);
+            this.lbl_n_elements.TabIndex = 13;
+            this.lbl_n_elements.Text = "Number of Elements:";
             // 
-            // txtBx_ReSendNum
+            // txtBx_sizeof_float_type
             // 
-            this.txtBx_ReSendNum.Location = new System.Drawing.Point(133, 21);
-            this.txtBx_ReSendNum.Name = "txtBx_ReSendNum";
-            this.txtBx_ReSendNum.Size = new System.Drawing.Size(32, 20);
-            this.txtBx_ReSendNum.TabIndex = 14;
-            this.txtBx_ReSendNum.Text = "3";
+            this.txtBx_sizeof_float_type.Location = new System.Drawing.Point(133, 21);
+            this.txtBx_sizeof_float_type.Name = "txtBx_sizeof_float_type";
+            this.txtBx_sizeof_float_type.Size = new System.Drawing.Size(51, 20);
+            this.txtBx_sizeof_float_type.TabIndex = 14;
+            this.txtBx_sizeof_float_type.Text = "4";
             // 
-            // txtBx_TotalPacketNum
+            // txtBx_n_elements
             // 
-            this.txtBx_TotalPacketNum.Location = new System.Drawing.Point(133, 46);
-            this.txtBx_TotalPacketNum.Name = "txtBx_TotalPacketNum";
-            this.txtBx_TotalPacketNum.Size = new System.Drawing.Size(32, 20);
-            this.txtBx_TotalPacketNum.TabIndex = 15;
-            this.txtBx_TotalPacketNum.Text = "8";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(231, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(90, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Re-send Counter:";
+            this.txtBx_n_elements.Location = new System.Drawing.Point(133, 46);
+            this.txtBx_n_elements.Name = "txtBx_n_elements";
+            this.txtBx_n_elements.Size = new System.Drawing.Size(51, 20);
+            this.txtBx_n_elements.TabIndex = 15;
+            this.txtBx_n_elements.Text = "2000";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(265, 49);
+            this.label6.Location = new System.Drawing.Point(217, 101);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.Size = new System.Drawing.Size(74, 13);
             this.label6.TabIndex = 17;
-            this.label6.Text = "Received:";
+            this.label6.Text = "Size of Frame:";
             // 
-            // txtBx_cnt
+            // txtBoxFrameSize
             // 
-            this.txtBx_cnt.Location = new System.Drawing.Point(327, 20);
-            this.txtBx_cnt.Name = "txtBx_cnt";
-            this.txtBx_cnt.Size = new System.Drawing.Size(62, 20);
-            this.txtBx_cnt.TabIndex = 18;
-            this.txtBx_cnt.Text = "0";
-            // 
-            // txtBoxPacket
-            // 
-            this.txtBoxPacket.Location = new System.Drawing.Point(327, 46);
-            this.txtBoxPacket.Name = "txtBoxPacket";
-            this.txtBoxPacket.Size = new System.Drawing.Size(62, 20);
-            this.txtBoxPacket.TabIndex = 19;
+            this.txtBoxFrameSize.Location = new System.Drawing.Point(327, 98);
+            this.txtBoxFrameSize.Name = "txtBoxFrameSize";
+            this.txtBoxFrameSize.Size = new System.Drawing.Size(51, 20);
+            this.txtBoxFrameSize.TabIndex = 19;
+            this.txtBoxFrameSize.Text = "8000";
             // 
             // btnSave
             // 
@@ -240,9 +214,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(9, 134);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 13);
+            this.label4.Size = new System.Drawing.Size(116, 13);
             this.label4.TabIndex = 22;
-            this.label4.Text = "Packet Report:";
+            this.label4.Text = "Values of Sensor: (Y,Z)";
             // 
             // rTxtBxReport
             // 
@@ -253,48 +227,6 @@
             this.rTxtBxReport.Text = "";
             this.rTxtBxReport.WordWrap = false;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(266, 75);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "Expected:";
-            // 
-            // txtBxExpected
-            // 
-            this.txtBxExpected.Location = new System.Drawing.Point(327, 72);
-            this.txtBxExpected.Name = "txtBxExpected";
-            this.txtBxExpected.Size = new System.Drawing.Size(62, 20);
-            this.txtBxExpected.TabIndex = 25;
-            // 
-            // lblWarning
-            // 
-            this.lblWarning.AutoSize = true;
-            this.lblWarning.Location = new System.Drawing.Point(391, 76);
-            this.lblWarning.Name = "lblWarning";
-            this.lblWarning.Size = new System.Drawing.Size(19, 13);
-            this.lblWarning.TabIndex = 26;
-            this.lblWarning.Text = "    ";
-            // 
-            // txtBxTotalLost
-            // 
-            this.txtBxTotalLost.Location = new System.Drawing.Point(327, 98);
-            this.txtBxTotalLost.Name = "txtBxTotalLost";
-            this.txtBxTotalLost.Size = new System.Drawing.Size(62, 20);
-            this.txtBxTotalLost.TabIndex = 27;
-            this.txtBxTotalLost.Text = "0";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(264, 101);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 13);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "Total Lost:";
-            // 
             // lblRunTime
             // 
             this.lblRunTime.AutoSize = true;
@@ -304,103 +236,66 @@
             this.lblRunTime.TabIndex = 29;
             this.lblRunTime.Text = "    ";
             // 
-            // txtBxTotalRecv
+            // txtBx_sizeof_checksum
             // 
-            this.txtBxTotalRecv.Location = new System.Drawing.Point(327, 124);
-            this.txtBxTotalRecv.Name = "txtBxTotalRecv";
-            this.txtBxTotalRecv.Size = new System.Drawing.Size(62, 20);
-            this.txtBxTotalRecv.TabIndex = 30;
-            this.txtBxTotalRecv.Text = "0";
+            this.txtBx_sizeof_checksum.Location = new System.Drawing.Point(327, 46);
+            this.txtBx_sizeof_checksum.Name = "txtBx_sizeof_checksum";
+            this.txtBx_sizeof_checksum.Size = new System.Drawing.Size(51, 20);
+            this.txtBx_sizeof_checksum.TabIndex = 33;
+            this.txtBx_sizeof_checksum.Text = "0";
             // 
-            // label9
+            // label_sizeof_checksum
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(238, 127);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(83, 13);
-            this.label9.TabIndex = 31;
-            this.label9.Text = "Total Received:";
+            this.label_sizeof_checksum.AutoSize = true;
+            this.label_sizeof_checksum.Location = new System.Drawing.Point(217, 49);
+            this.label_sizeof_checksum.Name = "label_sizeof_checksum";
+            this.label_sizeof_checksum.Size = new System.Drawing.Size(95, 13);
+            this.label_sizeof_checksum.TabIndex = 34;
+            this.label_sizeof_checksum.Text = "Size of Checksum:";
             // 
-            // label10
+            // txtBx_sizeof_sensor_data
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(231, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(75, 13);
-            this.label10.TabIndex = 32;
-            this.label10.Text = "Packet viewer";
+            this.txtBx_sizeof_sensor_data.Location = new System.Drawing.Point(327, 20);
+            this.txtBx_sizeof_sensor_data.Name = "txtBx_sizeof_sensor_data";
+            this.txtBx_sizeof_sensor_data.Size = new System.Drawing.Size(51, 20);
+            this.txtBx_sizeof_sensor_data.TabIndex = 18;
+            this.txtBx_sizeof_sensor_data.Text = "8000";
             // 
-            // txtBxSeqNum
+            // label5
             // 
-            this.txtBxSeqNum.Location = new System.Drawing.Point(133, 72);
-            this.txtBxSeqNum.Name = "txtBxSeqNum";
-            this.txtBxSeqNum.Size = new System.Drawing.Size(32, 20);
-            this.txtBxSeqNum.TabIndex = 33;
-            this.txtBxSeqNum.Text = "4";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 76);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(92, 13);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "Seq-Num Range: ";
-            // 
-            // lblTotalLostPercent
-            // 
-            this.lblTotalLostPercent.AutoSize = true;
-            this.lblTotalLostPercent.Location = new System.Drawing.Point(391, 101);
-            this.lblTotalLostPercent.Name = "lblTotalLostPercent";
-            this.lblTotalLostPercent.Size = new System.Drawing.Size(19, 13);
-            this.lblTotalLostPercent.TabIndex = 35;
-            this.lblTotalLostPercent.Text = "    ";
-            // 
-            // lblTotalReceivedPercent
-            // 
-            this.lblTotalReceivedPercent.AutoSize = true;
-            this.lblTotalReceivedPercent.Location = new System.Drawing.Point(391, 127);
-            this.lblTotalReceivedPercent.Name = "lblTotalReceivedPercent";
-            this.lblTotalReceivedPercent.Size = new System.Drawing.Size(19, 13);
-            this.lblTotalReceivedPercent.TabIndex = 36;
-            this.lblTotalReceivedPercent.Text = "    ";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(217, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Size of Sensor Data:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 498);
-            this.Controls.Add(this.lblTotalReceivedPercent);
-            this.Controls.Add(this.lblTotalLostPercent);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtBxSeqNum);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtBxTotalRecv);
+            this.Controls.Add(this.label_sizeof_checksum);
+            this.Controls.Add(this.txtBx_sizeof_checksum);
             this.Controls.Add(this.lblRunTime);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtBxTotalLost);
-            this.Controls.Add(this.lblWarning);
-            this.Controls.Add(this.txtBxExpected);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.rTxtBxReport);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtBoxPacket);
-            this.Controls.Add(this.txtBx_cnt);
+            this.Controls.Add(this.txtBoxFrameSize);
+            this.Controls.Add(this.txtBx_sizeof_sensor_data);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBx_TotalPacketNum);
-            this.Controls.Add(this.txtBx_ReSendNum);
-            this.Controls.Add(this.lbl_package);
-            this.Controls.Add(this.lbl_resend);
+            this.Controls.Add(this.txtBx_n_elements);
+            this.Controls.Add(this.txtBx_sizeof_float_type);
+            this.Controls.Add(this.lbl_n_elements);
+            this.Controls.Add(this.lbl_sizeof_float_type);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.richTextBox_console);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtBxPrefix);
+            this.Controls.Add(this.txtBx_sizeof_header);
             this.Controls.Add(this.richTextBox_uart);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cbSerialPort);
@@ -423,36 +318,26 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.RichTextBox richTextBox_uart;
         private System.Windows.Forms.RichTextBox richTextBox_console;
-        private System.Windows.Forms.TextBox txtBxPrefix;
+        private System.Windows.Forms.TextBox txtBx_sizeof_header;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label lbl_resend;
-        private System.Windows.Forms.Label lbl_package;
-        private System.Windows.Forms.TextBox txtBx_ReSendNum;
-        private System.Windows.Forms.TextBox txtBx_TotalPacketNum;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbl_sizeof_float_type;
+        private System.Windows.Forms.Label lbl_n_elements;
+        private System.Windows.Forms.TextBox txtBx_sizeof_float_type;
+        private System.Windows.Forms.TextBox txtBx_n_elements;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtBx_cnt;
-        private System.Windows.Forms.TextBox txtBoxPacket;
+        private System.Windows.Forms.TextBox txtBoxFrameSize;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox rTxtBxReport;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtBxExpected;
-        private System.Windows.Forms.Label lblWarning;
-        private System.Windows.Forms.TextBox txtBxTotalLost;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblRunTime;
-        private System.Windows.Forms.TextBox txtBxTotalRecv;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtBxSeqNum;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label lblTotalLostPercent;
-        private System.Windows.Forms.Label lblTotalReceivedPercent;
+        private System.Windows.Forms.TextBox txtBx_sizeof_checksum;
+        private System.Windows.Forms.Label label_sizeof_checksum;
+        private System.Windows.Forms.TextBox txtBx_sizeof_sensor_data;
+        private System.Windows.Forms.Label label5;
     }
 }
 
