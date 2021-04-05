@@ -67,7 +67,26 @@ namespace VirtualSerialDevice
                 btnConnect.Enabled = false;
             }
         }
+        private void DeleteFiles()
+        {
+            // Delete all files in a directory    
+            string[] files = { UART_LOG_FILE_PATH, STATUS_LOG_FILE_PATH, REPORT_FILE_PATH, /*HEX_FILE_PATH, HEX_CSV_FILE_PATH , BIN_FILE_PATH, BIN_CSV_FILE_PATH,*/};
+            foreach (string file in files)
+            {
+                File.Delete(file);
+                //printStatus($"{file} is deleted.");
+            }
 
+            // https://stackoverflow.com/questions/1620366/delete-files-from-directory-if-filename-contains-a-certain-word
+            string rootFolderPath = @".";
+            string filesToDelete = DELETE_REPORT_FILE_PATH; // @"sensor-data*.csv"; // Only delete .csv files containing "sensor-data" in their filenames
+            string[] fileList = System.IO.Directory.GetFiles(rootFolderPath, filesToDelete);
+            foreach (string file in fileList)
+            {
+                System.Diagnostics.Debug.WriteLine(file + "will be deleted");
+                System.IO.File.Delete(file);
+            }
+        }
         private void BtnConnect_Click(object sender, EventArgs e)
         {
             _serialPort = new SerialPort();
@@ -84,53 +103,31 @@ namespace VirtualSerialDevice
                 btnConnect.Enabled = false;
                 cbSerialPort.Enabled = false;
                 btnClose.Enabled = true;
-
+                // Display to richTextBox_console 
                 printStatus("Open serial " + _serialPort.PortName + ", " + _serialPort.BaudRate + ", " + _serialPort.Parity + ", " + _serialPort.DataBits + ", " + _serialPort.StopBits + "\n\n");
 
-                // Get 
                 SIZE_OF_FLOAT_TYPE = Convert.ToInt32(txtBxElementSize.Text);
                 N_DATA_YZ = Convert.ToInt32(txtBxNElements.Text);
                 HEADER_LENGTH = Convert.ToInt32(txtBxHeaderSize.Text);
                 CHECKSUM_LENGTH = Convert.ToInt32(txtBxChecksumSize.Text);
-
-                // Set
                 SENSOR_DATA_LENGTH = SIZE_OF_FLOAT_TYPE * N_DATA_YZ;
                 FRAME_SIZE = HEADER_LENGTH + SENSOR_DATA_LENGTH + CHECKSUM_LENGTH;
+
                 txtBxDataSize.Text = SENSOR_DATA_LENGTH.ToString();
                 txtBoxFrameSize.Text = FRAME_SIZE.ToString();
 
-#if SELECT_CASE_1
-                total_bytes = 0;
-#else // SELECT_CASE_2
-                total_bytes = 0;
-                buffer = new byte[FRAME_SIZE];
-#endif
                 // Disable input TextBox
                 txtBxElementSize.Enabled = false;
                 txtBxNElements.Enabled = false;
                 txtBxHeaderSize.Enabled = false;
                 txtBxChecksumSize.Enabled = false;
 
-                // Delete all files in a directory    
-                string[] files = { UART_LOG_FILE_PATH, STATUS_LOG_FILE_PATH , REPORT_FILE_PATH, /*HEX_FILE_PATH, HEX_CSV_FILE_PATH , BIN_FILE_PATH, BIN_CSV_FILE_PATH,*/};
-
-                foreach (string file in files)
-                {
-                    File.Delete(file);
-                    //printStatus($"{file} is deleted.");
-                }
-
-                string rootFolderPath = @".";
-                string filesToDelete = DELETE_REPORT_FILE_PATH; // @"sensor-data*.csv"; // Only delete .csv files containing "sensor-data" in their filenames
-                string[] fileList = System.IO.Directory.GetFiles(rootFolderPath, filesToDelete);
-                foreach (string file in fileList)
-                {
-                    System.Diagnostics.Debug.WriteLine(file + "will be deleted");
-                    System.IO.File.Delete(file);
-                }
-
                 // Reset global variables
+                total_bytes = 0;
                 g_index = 0;
+
+                // Delete saved files
+                DeleteFiles();
 
                 // Set Timer
                 SetTimer();
@@ -175,6 +172,7 @@ namespace VirtualSerialDevice
             richTextBox_console.Clear();
             richTextBox_uart.Clear();
             rTxtBxReport.Clear();
+            total_bytes = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -341,10 +339,17 @@ namespace VirtualSerialDevice
             total_bytes += bytes;
 #else // SELECT_CASE_2
             int bytes = sp.BytesToRead; // number of bytes received from UART COM port
-            //if (total_bytes + bytes +1 >= buffer.Length)
-            //{
-            //    total_bytes = 0; //!!!
-            //}
+            // Create or update buffer
+            if (buffer == null || buffer.Length != FRAME_SIZE)
+            {
+                total_bytes = 0;
+                buffer = new byte[FRAME_SIZE];
+            }
+            if (total_bytes + bytes > buffer.Length)
+            {
+                SetTextConsole(timeStam + "Out of range, reset total_bytes=0\n");
+                total_bytes = 0; //!!!
+            }
             sp.Read(buffer, total_bytes, bytes);
             total_bytes += bytes;
 #endif
@@ -379,8 +384,7 @@ namespace VirtualSerialDevice
             // Receive a completed frame
             if (total_bytes == FRAME_SIZE)
             {
-                int sensor_data_length = total_bytes - HEADER_LENGTH - CHECKSUM_LENGTH; // ignore
-                
+                int sensor_data_length = FRAME_SIZE - HEADER_LENGTH - CHECKSUM_LENGTH;                
                 //byte[] indata_array = { 0x44, 0x9D , 0xE8, 0xA4};
                 string str = "";
                 REPORT_FILE_PATH = "sensor-data-" + g_index + ".csv";
@@ -391,12 +395,14 @@ namespace VirtualSerialDevice
                     //buffer.SubArray(0, 2);
 
                     // Convert Byte array to Float array
-                    float[] float_output = convertByteArray2FloatArrary(buffer, 0, sensor_data_length);
+                    float[] float_output = convertByteArray2FloatArrary(buffer, HEADER_LENGTH, sensor_data_length);
                     str = "Received: " + float_output.Length;
                     SetTextConsole(str);
                     for (int i = 0; i < float_output.Length; i+=2)
                     {
-                        str = String.Format("{0}\t{1}\n", float_output[i], float_output[i + 1]);
+                        str = float_output[i].ToString("0.000") + "\t" + float_output[i + 1].ToString("0.000") + "\n";
+
+                        //str = String.Format("{0}\t{1}\n", float_output[i], float_output[i + 1]);
                         //// Display to Console RichTextBox
                         //SetTextConsole(str);
 
