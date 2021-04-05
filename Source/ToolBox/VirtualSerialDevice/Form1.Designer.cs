@@ -33,7 +33,7 @@
             this.cbSerialPort = new System.Windows.Forms.ComboBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.richTextBox_uart = new System.Windows.Forms.RichTextBox();
-            this.txtBx_sizeof_header = new System.Windows.Forms.TextBox();
+            this.txtBxHeaderSize = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBox_console = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,8 +41,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lbl_sizeof_float_type = new System.Windows.Forms.Label();
             this.lbl_n_elements = new System.Windows.Forms.Label();
-            this.txtBx_sizeof_float_type = new System.Windows.Forms.TextBox();
-            this.txtBx_n_elements = new System.Windows.Forms.TextBox();
+            this.txtBxElementSize = new System.Windows.Forms.TextBox();
+            this.txtBxNElements = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtBoxFrameSize = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -50,9 +50,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.rTxtBxReport = new System.Windows.Forms.RichTextBox();
             this.lblRunTime = new System.Windows.Forms.Label();
-            this.txtBx_sizeof_checksum = new System.Windows.Forms.TextBox();
+            this.txtBxChecksumSize = new System.Windows.Forms.TextBox();
             this.label_sizeof_checksum = new System.Windows.Forms.Label();
-            this.txtBx_sizeof_sensor_data = new System.Windows.Forms.TextBox();
+            this.txtBxDataSize = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -85,13 +85,13 @@
             this.richTextBox_uart.Text = "";
             this.richTextBox_uart.WordWrap = false;
             // 
-            // txtBx_sizeof_header
+            // txtBxHeaderSize
             // 
-            this.txtBx_sizeof_header.Location = new System.Drawing.Point(327, 72);
-            this.txtBx_sizeof_header.Name = "txtBx_sizeof_header";
-            this.txtBx_sizeof_header.Size = new System.Drawing.Size(51, 20);
-            this.txtBx_sizeof_header.TabIndex = 5;
-            this.txtBx_sizeof_header.Text = "0";
+            this.txtBxHeaderSize.Location = new System.Drawing.Point(327, 72);
+            this.txtBxHeaderSize.Name = "txtBxHeaderSize";
+            this.txtBxHeaderSize.Size = new System.Drawing.Size(51, 20);
+            this.txtBxHeaderSize.TabIndex = 5;
+            this.txtBxHeaderSize.Text = "0";
             // 
             // label1
             // 
@@ -141,7 +141,7 @@
             // lbl_sizeof_float_type
             // 
             this.lbl_sizeof_float_type.AutoSize = true;
-            this.lbl_sizeof_float_type.Location = new System.Drawing.Point(16, 27);
+            this.lbl_sizeof_float_type.Location = new System.Drawing.Point(12, 47);
             this.lbl_sizeof_float_type.Name = "lbl_sizeof_float_type";
             this.lbl_sizeof_float_type.Size = new System.Drawing.Size(83, 13);
             this.lbl_sizeof_float_type.TabIndex = 12;
@@ -150,27 +150,27 @@
             // lbl_n_elements
             // 
             this.lbl_n_elements.AutoSize = true;
-            this.lbl_n_elements.Location = new System.Drawing.Point(16, 49);
+            this.lbl_n_elements.Location = new System.Drawing.Point(12, 72);
             this.lbl_n_elements.Name = "lbl_n_elements";
             this.lbl_n_elements.Size = new System.Drawing.Size(105, 13);
             this.lbl_n_elements.TabIndex = 13;
             this.lbl_n_elements.Text = "Number of Elements:";
             // 
-            // txtBx_sizeof_float_type
+            // txtBxElementSize
             // 
-            this.txtBx_sizeof_float_type.Location = new System.Drawing.Point(133, 21);
-            this.txtBx_sizeof_float_type.Name = "txtBx_sizeof_float_type";
-            this.txtBx_sizeof_float_type.Size = new System.Drawing.Size(51, 20);
-            this.txtBx_sizeof_float_type.TabIndex = 14;
-            this.txtBx_sizeof_float_type.Text = "4";
+            this.txtBxElementSize.Location = new System.Drawing.Point(122, 44);
+            this.txtBxElementSize.Name = "txtBxElementSize";
+            this.txtBxElementSize.Size = new System.Drawing.Size(51, 20);
+            this.txtBxElementSize.TabIndex = 14;
+            this.txtBxElementSize.Text = "4";
             // 
-            // txtBx_n_elements
+            // txtBxNElements
             // 
-            this.txtBx_n_elements.Location = new System.Drawing.Point(133, 46);
-            this.txtBx_n_elements.Name = "txtBx_n_elements";
-            this.txtBx_n_elements.Size = new System.Drawing.Size(51, 20);
-            this.txtBx_n_elements.TabIndex = 15;
-            this.txtBx_n_elements.Text = "2000";
+            this.txtBxNElements.Location = new System.Drawing.Point(122, 69);
+            this.txtBxNElements.Name = "txtBxNElements";
+            this.txtBxNElements.Size = new System.Drawing.Size(51, 20);
+            this.txtBxNElements.TabIndex = 15;
+            this.txtBxNElements.Text = "2000";
             // 
             // label6
             // 
@@ -183,6 +183,7 @@
             // 
             // txtBoxFrameSize
             // 
+            this.txtBoxFrameSize.Enabled = false;
             this.txtBoxFrameSize.Location = new System.Drawing.Point(327, 98);
             this.txtBoxFrameSize.Name = "txtBoxFrameSize";
             this.txtBoxFrameSize.Size = new System.Drawing.Size(51, 20);
@@ -230,19 +231,19 @@
             // lblRunTime
             // 
             this.lblRunTime.AutoSize = true;
-            this.lblRunTime.Location = new System.Drawing.Point(395, 24);
+            this.lblRunTime.Location = new System.Drawing.Point(482, 51);
             this.lblRunTime.Name = "lblRunTime";
             this.lblRunTime.Size = new System.Drawing.Size(19, 13);
             this.lblRunTime.TabIndex = 29;
             this.lblRunTime.Text = "    ";
             // 
-            // txtBx_sizeof_checksum
+            // txtBxChecksumSize
             // 
-            this.txtBx_sizeof_checksum.Location = new System.Drawing.Point(327, 46);
-            this.txtBx_sizeof_checksum.Name = "txtBx_sizeof_checksum";
-            this.txtBx_sizeof_checksum.Size = new System.Drawing.Size(51, 20);
-            this.txtBx_sizeof_checksum.TabIndex = 33;
-            this.txtBx_sizeof_checksum.Text = "0";
+            this.txtBxChecksumSize.Location = new System.Drawing.Point(327, 46);
+            this.txtBxChecksumSize.Name = "txtBxChecksumSize";
+            this.txtBxChecksumSize.Size = new System.Drawing.Size(51, 20);
+            this.txtBxChecksumSize.TabIndex = 33;
+            this.txtBxChecksumSize.Text = "0";
             // 
             // label_sizeof_checksum
             // 
@@ -253,18 +254,19 @@
             this.label_sizeof_checksum.TabIndex = 34;
             this.label_sizeof_checksum.Text = "Size of Checksum:";
             // 
-            // txtBx_sizeof_sensor_data
+            // txtBxDataSize
             // 
-            this.txtBx_sizeof_sensor_data.Location = new System.Drawing.Point(327, 20);
-            this.txtBx_sizeof_sensor_data.Name = "txtBx_sizeof_sensor_data";
-            this.txtBx_sizeof_sensor_data.Size = new System.Drawing.Size(51, 20);
-            this.txtBx_sizeof_sensor_data.TabIndex = 18;
-            this.txtBx_sizeof_sensor_data.Text = "8000";
+            this.txtBxDataSize.Enabled = false;
+            this.txtBxDataSize.Location = new System.Drawing.Point(122, 98);
+            this.txtBxDataSize.Name = "txtBxDataSize";
+            this.txtBxDataSize.Size = new System.Drawing.Size(51, 20);
+            this.txtBxDataSize.TabIndex = 18;
+            this.txtBxDataSize.Text = "8000";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(217, 23);
+            this.label5.Location = new System.Drawing.Point(12, 101);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 13);
             this.label5.TabIndex = 16;
@@ -276,18 +278,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 498);
             this.Controls.Add(this.label_sizeof_checksum);
-            this.Controls.Add(this.txtBx_sizeof_checksum);
+            this.Controls.Add(this.txtBxChecksumSize);
             this.Controls.Add(this.lblRunTime);
             this.Controls.Add(this.rTxtBxReport);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtBoxFrameSize);
-            this.Controls.Add(this.txtBx_sizeof_sensor_data);
+            this.Controls.Add(this.txtBxDataSize);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtBx_n_elements);
-            this.Controls.Add(this.txtBx_sizeof_float_type);
+            this.Controls.Add(this.txtBxNElements);
+            this.Controls.Add(this.txtBxElementSize);
             this.Controls.Add(this.lbl_n_elements);
             this.Controls.Add(this.lbl_sizeof_float_type);
             this.Controls.Add(this.btnClose);
@@ -295,7 +297,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.richTextBox_console);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtBx_sizeof_header);
+            this.Controls.Add(this.txtBxHeaderSize);
             this.Controls.Add(this.richTextBox_uart);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cbSerialPort);
@@ -318,15 +320,15 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.RichTextBox richTextBox_uart;
         private System.Windows.Forms.RichTextBox richTextBox_console;
-        private System.Windows.Forms.TextBox txtBx_sizeof_header;
+        private System.Windows.Forms.TextBox txtBxHeaderSize;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lbl_sizeof_float_type;
         private System.Windows.Forms.Label lbl_n_elements;
-        private System.Windows.Forms.TextBox txtBx_sizeof_float_type;
-        private System.Windows.Forms.TextBox txtBx_n_elements;
+        private System.Windows.Forms.TextBox txtBxElementSize;
+        private System.Windows.Forms.TextBox txtBxNElements;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtBoxFrameSize;
         private System.Windows.Forms.Button btnSave;
@@ -334,9 +336,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox rTxtBxReport;
         private System.Windows.Forms.Label lblRunTime;
-        private System.Windows.Forms.TextBox txtBx_sizeof_checksum;
+        private System.Windows.Forms.TextBox txtBxChecksumSize;
         private System.Windows.Forms.Label label_sizeof_checksum;
-        private System.Windows.Forms.TextBox txtBx_sizeof_sensor_data;
+        private System.Windows.Forms.TextBox txtBxDataSize;
         private System.Windows.Forms.Label label5;
     }
 }

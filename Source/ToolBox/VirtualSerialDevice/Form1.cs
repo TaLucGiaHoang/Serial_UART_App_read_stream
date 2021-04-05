@@ -20,14 +20,15 @@ namespace VirtualSerialDevice
         const string UART_LOG_FILE_PATH = "serial.log"; // File to save log from Uart RichTextBox
         const string STATUS_LOG_FILE_PATH = "status.log"; // File to save log from Status RichTextBox
         string REPORT_FILE_PATH = "sensor-datax.csv";
+        string DELETE_REPORT_FILE_PATH = @"sensor-data*.csv";
         private int g_index = 0; // sensor-data-0.csv , sensor-data-1.csv , sensor-data-2.csv ...
         private string timeStam;
 
-        private int SIZE_OF_FLOAT_TYPE = 4;  // the size of a float type data from STM32 is 4 bytes
-        private int N_DATA_YZ = 2 * 1000; // (Y + Z)*1000
-        private int HEADER_LENGTH = 0; // ignore header length
+        private int SIZE_OF_FLOAT_TYPE;// = 4;  // the size of a float type data from STM32 is 4 bytes
+        private int N_DATA_YZ;// = 2 * 1000; // (Y + Z)*1000
+        private int HEADER_LENGTH;// = 0; // ignore header length
         private int SENSOR_DATA_LENGTH;// = SIZE_OF_FLOAT_TYPE * N_DATA_YZ; // 4 x 2 x 1000
-        private int CHECKSUM_LENGTH = 0; // ignore CRC length
+        private int CHECKSUM_LENGTH;// = 0; // ignore CRC length
         private int FRAME_SIZE;// = HEADER_LENGTH + SENSOR_DATA_LENGTH + CHECKSUM_LENGTH;
 #if SELECT_CASE_1
         private int total_bytes = 0;
@@ -87,44 +88,49 @@ namespace VirtualSerialDevice
                 printStatus("Open serial " + _serialPort.PortName + ", " + _serialPort.BaudRate + ", " + _serialPort.Parity + ", " + _serialPort.DataBits + ", " + _serialPort.StopBits + "\n\n");
 
                 // Get 
-                SIZE_OF_FLOAT_TYPE = Convert.ToInt32(txtBx_sizeof_float_type.Text);
-                N_DATA_YZ = Convert.ToInt32(txtBx_n_elements.Text);
-                HEADER_LENGTH = Convert.ToInt32(txtBx_sizeof_header.Text);
-                CHECKSUM_LENGTH = Convert.ToInt32(txtBx_sizeof_checksum.Text);
+                SIZE_OF_FLOAT_TYPE = Convert.ToInt32(txtBxElementSize.Text);
+                N_DATA_YZ = Convert.ToInt32(txtBxNElements.Text);
+                HEADER_LENGTH = Convert.ToInt32(txtBxHeaderSize.Text);
+                CHECKSUM_LENGTH = Convert.ToInt32(txtBxChecksumSize.Text);
 
                 // Set
                 SENSOR_DATA_LENGTH = SIZE_OF_FLOAT_TYPE * N_DATA_YZ;
                 FRAME_SIZE = HEADER_LENGTH + SENSOR_DATA_LENGTH + CHECKSUM_LENGTH;
-                txtBx_sizeof_sensor_data.Text = SENSOR_DATA_LENGTH.ToString();
+                txtBxDataSize.Text = SENSOR_DATA_LENGTH.ToString();
                 txtBoxFrameSize.Text = FRAME_SIZE.ToString();
 
 #if SELECT_CASE_1
-        total_bytes = 0;
+                total_bytes = 0;
 #else // SELECT_CASE_2
                 total_bytes = 0;
-        buffer = new byte[FRAME_SIZE];
+                buffer = new byte[FRAME_SIZE];
 #endif
                 // Disable input TextBox
-                txtBx_sizeof_float_type.Enabled = false;
-                txtBx_n_elements.Enabled = false;
-                txtBx_sizeof_header.Enabled = false;
-                txtBx_sizeof_sensor_data.Enabled = false;
-                txtBx_sizeof_checksum.Enabled = false;
-                txtBoxFrameSize.Enabled = false;
+                txtBxElementSize.Enabled = false;
+                txtBxNElements.Enabled = false;
+                txtBxHeaderSize.Enabled = false;
+                txtBxChecksumSize.Enabled = false;
 
-        // Delete all files in a directory    
+                // Delete all files in a directory    
                 string[] files = { UART_LOG_FILE_PATH, STATUS_LOG_FILE_PATH , REPORT_FILE_PATH, /*HEX_FILE_PATH, HEX_CSV_FILE_PATH , BIN_FILE_PATH, BIN_CSV_FILE_PATH,*/};
+
                 foreach (string file in files)
                 {
                     File.Delete(file);
                     //printStatus($"{file} is deleted.");
                 }
 
-                // Reset variables
-                //resend_cnt = 0;
-                //txtBx_cnt.Text = resend_cnt.ToString();
+                string rootFolderPath = @".";
+                string filesToDelete = DELETE_REPORT_FILE_PATH; // @"sensor-data*.csv"; // Only delete .csv files containing "sensor-data" in their filenames
+                string[] fileList = System.IO.Directory.GetFiles(rootFolderPath, filesToDelete);
+                foreach (string file in fileList)
+                {
+                    System.Diagnostics.Debug.WriteLine(file + "will be deleted");
+                    System.IO.File.Delete(file);
+                }
 
-
+                // Reset global variables
+                g_index = 0;
 
                 // Set Timer
                 SetTimer();
@@ -145,14 +151,15 @@ namespace VirtualSerialDevice
                 cbSerialPort.Enabled = true;
 
                 // Enable input TextBoxs
-                txtBx_sizeof_float_type.Enabled = true;
-                txtBx_n_elements.Enabled = true;
-                txtBx_sizeof_header.Enabled = true;
-                txtBx_sizeof_sensor_data.Enabled = true;
-                txtBx_sizeof_checksum.Enabled = true;
-                txtBoxFrameSize.Enabled = true;
+                txtBxElementSize.Enabled = true;
+                txtBxNElements.Enabled = true;
+                txtBxHeaderSize.Enabled = true;
+                txtBxChecksumSize.Enabled = true;
 
                 printStatus("Close serial " + _serialPort.PortName);
+
+                // Reset global variables
+                //g_index = 0;
 
                 // Stop Timer
                 StopTimer();
@@ -266,42 +273,42 @@ namespace VirtualSerialDevice
                 }
             }
         }
-       
-        //// Callback Handler for txtBxExpected
-        //delegate void SetTextBoxExpectedCallback(string text);
-        //private void SetTextBoxExpected(string text)
-        //{
-        //    // InvokeRequired required compares the thread ID of the
-        //    // calling thread to the thread ID of the creating thread.
-        //    // If these threads are different, it returns true.
-        //    if (this.txtBxExpected.InvokeRequired)
-        //    {
-        //        SetTextBoxExpectedCallback d = new SetTextBoxExpectedCallback(SetTextBoxExpected);
-        //        this.Invoke(d, new object[] { text });
-        //    }
-        //    else
-        //    {
-        //        this.txtBxExpected.Text = text;
-        //    }
-        //}
 
-        //// Callback Handler for lblWarning
-        //delegate void SetTextLabelWarningCallback(string text);
-        //private void SetTextLabelWarning(string text)
-        //{
-        //    // InvokeRequired required compares the thread ID of the
-        //    // calling thread to the thread ID of the creating thread.
-        //    // If these threads are different, it returns true.
-        //    if (this.lblWarning.InvokeRequired)
-        //    {
-        //        SetTextLabelWarningCallback d = new SetTextLabelWarningCallback(SetTextLabelWarning);
-        //        this.Invoke(d, new object[] { text });
-        //    }
-        //    else
-        //    {
-        //        this.lblWarning.Text = text;
-        //    }
-        //}
+        // Callback Handler for txtBxDataSize
+        delegate void SetTextBoxDataSizeCallback(string text);
+        private void SetTextBoxDataSize(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.txtBxDataSize.InvokeRequired)
+            {
+                SetTextBoxDataSizeCallback d = new SetTextBoxDataSizeCallback(SetTextBoxDataSize);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.txtBxDataSize.Text = text;
+            }
+        }
+
+        // Callback Handler for txtBoxFrameSize
+        delegate void SetTextBoxFrameSizeCallback(string text);
+        private void SetTextBoxFrameSize(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.txtBoxFrameSize.InvokeRequired)
+            {
+                SetTextBoxFrameSizeCallback d = new SetTextBoxFrameSizeCallback(SetTextBoxFrameSize);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.txtBoxFrameSize.Text = text;
+            }
+        }
 
         // Callback Handler for lblRunTime
         delegate void SetTextLabelRunTimeCallback(string text);
@@ -466,56 +473,6 @@ namespace VirtualSerialDevice
             return null;
         }
 
-
-
-        //private string Hex2Bin_String(string hex_str)
-        //{
-        //    string bin_str = "";
-        //    foreach (char charHex in hex_str.ToUpper().ToCharArray())
-        //    {
-        //        // Convert a hexadecimal character to an binary string.
-        //        bin_str = bin_str + Hex2Bin(charHex);
-        //    }
-        //    return bin_str;
-        //}
-
-        //private string Hex2Bin(char hex)
-        //{
-        //    switch (hex)
-        //    {
-        //        case '0': { return "0000"; break; }
-        //        case '1': { return "0001"; break; }
-        //        case '2': { return "0010"; break; }
-        //        case '3': { return "0011"; break; }
-        //        case '4': { return "0100"; break; }
-        //        case '5': { return "0101"; break; }
-        //        case '6': { return "0110"; break; }
-        //        case '7': { return "0111"; break; }
-        //        case '8': { return "1000"; break; }
-        //        case '9': { return "1001"; break; }
-        //        case 'A': case 'a': { return "1010"; break; }
-        //        case 'B': case 'b': { return "1011"; break; }
-        //        case 'C': case 'c': { return "1100"; break; }
-        //        case 'D': case 'd': { return "1101"; break; }
-        //        case 'E': case 'e': { return "1110"; break; }
-        //        case 'F': case 'f': { return "1111"; break; }
-        //        default: { return hex.ToString(); break; } // return itself character
-        //    }
-        //}
-
-        //// swap 2 byte for 4-digit hexdecimal string
-        //// retrun null if false
-        //private string swapByte(string hex_4_digits_str)
-        //{
-        //    if (hex_4_digits_str.Length == 4)
-        //    {
-        //        string low = hex_4_digits_str.Substring(0, 2); // low digit
-        //        string high = hex_4_digits_str.Substring(2, 2); // hight digit
-        //        return (high + low);
-        //    }
-        //    else return null;
-        //}
-
         private void printStatus(string str)
         {
             // Print timeStamp
@@ -559,6 +516,5 @@ namespace VirtualSerialDevice
             //Console.WriteLine("RunTime " + elapsedTime);
             SetTextLabelRunTime(elapsedTime);
         }
-
     }
 }
