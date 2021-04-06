@@ -34,7 +34,7 @@ namespace VirtualSerialDevice
         private int total_bytes = 0;
 #else // SELECT_CASE_2
         private int total_bytes = 0;
-        private byte[] buffer;// = new byte[FRAME_SIZE];
+        private byte[] buffer = new byte[8000];
 #endif
         // Timer
         Stopwatch stopWatch = new Stopwatch();
@@ -332,6 +332,13 @@ namespace VirtualSerialDevice
             SerialPort sp = (SerialPort)sender;             
             if (!sp.IsOpen) return;
 
+            SIZE_OF_FLOAT_TYPE = Convert.ToInt32(txtBxElementSize.Text);
+            N_DATA_YZ = Convert.ToInt32(txtBxNElements.Text);
+            HEADER_LENGTH = Convert.ToInt32(txtBxHeaderSize.Text);
+            CHECKSUM_LENGTH = Convert.ToInt32(txtBxChecksumSize.Text);
+            SENSOR_DATA_LENGTH = SIZE_OF_FLOAT_TYPE * N_DATA_YZ;
+            FRAME_SIZE = HEADER_LENGTH + SENSOR_DATA_LENGTH + CHECKSUM_LENGTH;
+
 #if SELECT_CASE_1
             int bytes = sp.BytesToRead; // number of bytes received from UART COM port
             byte[] buffer = new byte[bytes];
@@ -340,8 +347,9 @@ namespace VirtualSerialDevice
 #else // SELECT_CASE_2
             int bytes = sp.BytesToRead; // number of bytes received from UART COM port
             // Create or update buffer
-            if (buffer == null || buffer.Length != FRAME_SIZE)
+            if(FRAME_SIZE != buffer.Length)
             {
+                SetTextConsole(timeStam + "Create new buffer\n");
                 total_bytes = 0;
                 buffer = new byte[FRAME_SIZE];
             }
@@ -349,6 +357,7 @@ namespace VirtualSerialDevice
             {
                 SetTextConsole(timeStam + "Out of range, reset total_bytes=0\n");
                 total_bytes = 0; //!!!
+                //buffer = new byte[FRAME_SIZE];
             }
             sp.Read(buffer, total_bytes, bytes);
             total_bytes += bytes;
